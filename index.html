@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arthur e Bruno | Calculadora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'ds-digital';
+            src: url('./fonts/ds-digital.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 100vh;
+            background-image: linear-gradient(to top right, #80D0C7, #0093E9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .calc{
+            box-sizing: border-box;
+            padding: 28px;
+            width: 510px;
+            height: 800px;
+            background-color: rgb(253, 255, 252, 20%);
+            border-radius: 50px;
+            box-shadow: 0 4px 4px rgb(0, 0, 0, 25%);
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .circle{
+            border-radius: 100%;
+            box-shadow: 0 4px 30px 0 rgb(0, 0, 0, 25%);
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+        .circle-one{
+            width: 500px;
+            height: 500px;
+            top: -50px;
+            left: 220px;
+        }
+        .circle-two{
+            width: 300px;
+            height: 300px;
+            right: -100px;
+            top: 10px;
+        }
+        .circle-three{
+            width: 350px;
+            height: 350px;
+            right: 400px;
+            bottom: -50px;
+        }
+        .circle-four{
+            width: 200px;
+            height: 200px;
+            left: 300px;
+            bottom: 40px;
+        }
+        .keyboard{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            column-gap: 30px;
+            row-gap: 14px;
+            width: 100%;
+        }
+        .key{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 120px;
+            height: 120px;
+            background-color: rgb(253, 255, 252, 25%);
+            border-radius: 100%;
+            font-family: 'Bebas Neue';
+            font-size: 55px;
+            user-select: none;
+            color: #fff;
+        }
+        .options{
+            color: #fff;
+            font-family: 'Bebas Neue';
+            font-size: 35px;
+            background-color: rgb(253, 255, 252, 25%);
+            border-radius: 100px;
+            padding: 5px 20px;
+            user-select: none;
+        }
+        .display{
+            width: 457px;
+            height: 112px;
+            background-color: rgb(253, 255, 252, 25%);
+            border-radius: 18px;
+        }
+        .display > div{
+            height: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            padding: 14px;
+            box-sizing: border-box;
+            font-family: 'ds-digital';
+            color: #fff;
+        }
+        .input{
+            font-size: 30px;
+        }
+        .output{
+            font-size: 41px;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle circle-one"></div>
+    <div class="circle circle-two"></div>
+    <div class="circle circle-three"></div>
+    <div class="circle circle-four"></div>
+    <div class="calc">
+        <div class="display">
+            <div class="input">132</div>
+            <div class="output">10001001</div>
+        </div>
+        <div class="options">
+            DEC > BIN
+        </div>
+        <div class="keyboard">
+            <div class="key">1</div>
+            <div class="key">2</div>
+            <div class="key">3</div>
+            <div class="key">4</div>
+            <div class="key">5</div>
+            <div class="key">6</div>
+            <div class="key">7</div>
+            <div class="key">8</div>
+            <div class="key">9</div>
+            <div class="key">C</div>
+            <div class="key">0</div>
+            <div class="key">CE</div>
+        </div>
+    </div>
+</body>
+</html>
