@@ -80,7 +80,12 @@
             row-gap: 14px;
             width: 100%;
         }
+        .key:hover{
+            background-color: rgb(253, 255, 252, 45%);
+        }
         .key{
+            transition: .25s;
+            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -133,26 +138,87 @@
     <div class="circle circle-four"></div>
     <div class="calc">
         <div class="display">
-            <div class="input">132</div>
-            <div class="output">10001001</div>
+            <div class="input" id="div_input"></div>
+            <div class="output" id="div_output"></div>
         </div>
         <div class="options">
             DEC > BIN
         </div>
         <div class="keyboard">
-            <div class="key">1</div>
-            <div class="key">2</div>
-            <div class="key">3</div>
-            <div class="key">4</div>
-            <div class="key">5</div>
-            <div class="key">6</div>
-            <div class="key">7</div>
-            <div class="key">8</div>
-            <div class="key">9</div>
-            <div class="key">C</div>
-            <div class="key">0</div>
-            <div class="key">CE</div>
+            <div class="key" onclick="key1()">1</div>
+            <div class="key" onclick="key2()">2</div>
+            <div class="key" onclick="key3()">3</div>
+            <div class="key" onclick="key4()">4</div>
+            <div class="key" onclick="key5()">5</div>
+            <div class="key" onclick="key6()">6</div>
+            <div class="key" onclick="key7()">7</div>
+            <div class="key" onclick="key8()">8</div>
+            <div class="key" onclick="key9()">9</div>
+            <div class="key" onclick="keyC()">C</div>
+            <div class="key" onclick="key0()">0</div>
+            <div class="key" onclick="keyCE()">CE</div>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+    var valorInput = '';
+    var inputMode = 'dec';
+    var outputMode = 'bin';
+
+    function atualizarDisplay(){
+        valorInput = Number(div_input.innerHTML);
+
+        if(inputMode == 'dec' && outputMode == 'bin') div_output.innerHTML = valorInput.toString(2);
+
+    }
+    function key1(){
+        div_input.innerHTML += '1';
+        atualizarDisplay();
+    }
+    function key2(){
+        div_input.innerHTML += '2';
+        atualizarDisplay();
+    }
+    function key3(){
+        div_input.innerHTML += '3';
+        atualizarDisplay();
+    }
+    function key4(){
+        div_input.innerHTML += '4';
+        atualizarDisplay();
+    }
+    function key5(){
+        div_input.innerHTML += '5';
+        atualizarDisplay();
+    }
+    function key6(){
+        div_input.innerHTML += '6';
+        atualizarDisplay();
+    }
+    function key7(){
+        div_input.innerHTML += '7';
+        atualizarDisplay();
+    }
+    function key8(){
+        div_input.innerHTML += '8';
+        atualizarDisplay();
+    }
+    function key9(){
+        div_input.innerHTML += '9';
+        atualizarDisplay();
+    }
+    function key0(){
+        div_input.innerHTML += '0';
+        atualizarDisplay();
+    }
+    function keyC(){
+        div_input.innerHTML = div_input.innerHTML.slice(0, div_input.innerHTML.length-1);
+        atualizarDisplay();
+    }
+    function keyCE(){
+        div_input.innerHTML = '';
+        atualizarDisplay();
+    }
+</script>
