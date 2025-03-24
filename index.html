@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_backspace" />
     <style>
         @font-face {
             font-family: 'ds-digital';
@@ -129,6 +130,22 @@
         .output{
             font-size: 41px;
         }
+        .input_output_option{
+            transition: 0.25s;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .input_output_option:hover{
+            border-radius: 10px;
+            background-color: rgb(253, 255, 252, 25%);
+        }
+        .backspace{
+            font-size: 50px;
+        }
+        .key_hex{
+            width: 80px;
+            height: 80px;
+        }
     </style>
 </head>
 <body>
@@ -142,9 +159,9 @@
             <div class="output" id="div_output"></div>
         </div>
         <div class="options">
-            DEC > BIN
+            <span class="input_output_option" onclick="changeInputMode()" id="span_input">DEC</span> > <span class="input_output_option" onclick="changeOutputMode">BIN</span>
         </div>
-        <div class="keyboard">
+        <div class="keyboard" id="div_keyboard">
             <div class="key" onclick="key1()">1</div>
             <div class="key" onclick="key2()">2</div>
             <div class="key" onclick="key3()">3</div>
@@ -154,7 +171,7 @@
             <div class="key" onclick="key7()">7</div>
             <div class="key" onclick="key8()">8</div>
             <div class="key" onclick="key9()">9</div>
-            <div class="key" onclick="keyC()">C</div>
+            <div class="key" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
             <div class="key" onclick="key0()">0</div>
             <div class="key" onclick="keyCE()">CE</div>
         </div>
@@ -164,8 +181,76 @@
 
 <script>
     var valorInput = '';
+    
+    var options = ['dec', 'bin', 'oct', 'hex'];
+
     var inputMode = 'dec';
     var outputMode = 'bin';
+
+    function changeInputMode(){
+        var posicaoOptions = options.indexOf(inputMode);
+        
+        if(posicaoOptions == options.length-1){
+            posicaoOptions = -1;
+        }
+        inputMode = options[posicaoOptions+1];
+        span_input.innerHTML = inputMode;
+
+        if(inputMode == 'bin'){
+            div_keyboard.innerHTML = `
+                <div class="key" onclick="key1()">1</div>
+
+                <div class="key" onclick="key0()">0</div>
+                
+                <div class="key" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+
+                <div class="key" onclick="keyCE()">CE</div>
+            `
+        }else if(inputMode == 'oct'){
+            div_keyboard.innerHTML = `
+                <div class="key" onclick="key1()">1</div>
+                <div class="key" onclick="key2()">2</div>
+                <div class="key" onclick="key3()">3</div>
+                <div class="key" onclick="key4()">4</div>
+                <div class="key" onclick="key5()">5</div>
+                <div class="key" onclick="key6()">6</div>
+                <div class="key" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+                <div class="key" onclick="key7()">7</div>
+                <div class="key" onclick="keyCE()">CE</div>
+            `
+        }else if(inputMode == 'hex'){
+            div_keyboard.innerHTML = `
+                <div class="key key_hex" onclick="key1()">1</div>
+                <div class="key key_hex" onclick="key2()">2</div>
+                <div class="key key_hex" onclick="key3()">3</div>
+                <div class="key key_hex" onclick="key4()">4</div>
+                <div class="key key_hex" onclick="key5()">5</div>
+                <div class="key key_hex" onclick="key6()">6</div>
+                <div class="key key_hex" onclick="key7()">7</div>
+                <div class="key key_hex" onclick="key8()">8</div>
+                <div class="key key_hex" onclick="key9()">9</div>
+                <div class="key key_hex" onclick="key0()">0</div>
+                <div class="key key_hex" onclick="key0()">A</div>
+                <div class="key key_hex" onclick="key0()">B</div>
+                <div class="key key_hex" onclick="key0()">C</div>
+                <div class="key key_hex" onclick="key0()">D</div>
+                <div class="key key_hex" onclick="key0()">E</div>
+                <div class="key key_hex" onclick="key0()">F</div>
+                <div class="key key_hex" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+                <div class="key key_hex" onclick="keyCE()">CE</div>
+            `
+        }
+    }
+
+    function changeOutputMode(){
+        var posicaoOptions = options.indexOf(outputMode);
+        
+        if(posicaoOptions == options.length-1){
+            posicaoOptions = -1;
+        }
+        outputMode = options[posicaoOptions+1];
+        span_output.innerHTML = outputMode;
+    }
 
     function atualizarDisplay(){
         valorInput = Number(div_input.innerHTML);
