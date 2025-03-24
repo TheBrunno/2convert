@@ -76,10 +76,12 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
+            align-items: end;
             flex-wrap: wrap;
             column-gap: 30px;
             row-gap: 14px;
             width: 100%;
+            height: 520px;
         }
         .key:hover{
             background-color: rgb(253, 255, 252, 45%);
@@ -146,6 +148,10 @@
             width: 80px;
             height: 80px;
         }
+        .key_bin{
+            width: 200px;
+            height: 200px;    
+        }
     </style>
 </head>
 <body>
@@ -159,7 +165,7 @@
             <div class="output" id="div_output"></div>
         </div>
         <div class="options">
-            <span class="input_output_option" onclick="changeInputMode()" id="span_input">DEC</span> > <span class="input_output_option" onclick="changeOutputMode">BIN</span>
+            <span class="input_output_option" onclick="changeInputMode()" id="span_input">DEC</span> > <span class="input_output_option" onclick="changeOutputMode()" id="span_output">BIN</span>
         </div>
         <div class="keyboard" id="div_keyboard">
             <div class="key" onclick="key1()">1</div>
@@ -171,7 +177,7 @@
             <div class="key" onclick="key7()">7</div>
             <div class="key" onclick="key8()">8</div>
             <div class="key" onclick="key9()">9</div>
-            <div class="key" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+            <div class="key" onclick="keyBackspace()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
             <div class="key" onclick="key0()">0</div>
             <div class="key" onclick="keyCE()">CE</div>
         </div>
@@ -189,6 +195,10 @@
 
     function changeInputMode(){
         var posicaoOptions = options.indexOf(inputMode);
+
+        div_output.innerHTML = '0';
+        div_input.innerHTML = '';
+        valorInput = '';
         
         if(posicaoOptions == options.length-1){
             posicaoOptions = -1;
@@ -198,13 +208,10 @@
 
         if(inputMode == 'bin'){
             div_keyboard.innerHTML = `
-                <div class="key" onclick="key1()">1</div>
-
-                <div class="key" onclick="key0()">0</div>
-                
-                <div class="key" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
-
-                <div class="key" onclick="keyCE()">CE</div>
+                <div class="key key_bin" onclick="key1()">1</div>
+                <div class="key key_bin" onclick="key0()">0</div>
+                <div class="key key_bin" onclick="keyBackspace()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+                <div class="key key_bin" onclick="keyCE()">CE</div>
             `
         }else if(inputMode == 'oct'){
             div_keyboard.innerHTML = `
@@ -214,7 +221,7 @@
                 <div class="key" onclick="key4()">4</div>
                 <div class="key" onclick="key5()">5</div>
                 <div class="key" onclick="key6()">6</div>
-                <div class="key" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+                <div class="key" onclick="keyBackspace()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
                 <div class="key" onclick="key7()">7</div>
                 <div class="key" onclick="keyCE()">CE</div>
             `
@@ -230,14 +237,29 @@
                 <div class="key key_hex" onclick="key8()">8</div>
                 <div class="key key_hex" onclick="key9()">9</div>
                 <div class="key key_hex" onclick="key0()">0</div>
-                <div class="key key_hex" onclick="key0()">A</div>
-                <div class="key key_hex" onclick="key0()">B</div>
-                <div class="key key_hex" onclick="key0()">C</div>
-                <div class="key key_hex" onclick="key0()">D</div>
-                <div class="key key_hex" onclick="key0()">E</div>
-                <div class="key key_hex" onclick="key0()">F</div>
-                <div class="key key_hex" onclick="keyC()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+                <div class="key key_hex" onclick="keyA()">A</div>
+                <div class="key key_hex" onclick="keyB()">B</div>
+                <div class="key key_hex" onclick="keyC()">C</div>
+                <div class="key key_hex" onclick="keyD()">D</div>
+                <div class="key key_hex" onclick="keyE()">E</div>
+                <div class="key key_hex" onclick="keyF()">F</div>
+                <div class="key key_hex" onclick="keyBackspace()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
                 <div class="key key_hex" onclick="keyCE()">CE</div>
+            `
+        }else if(inputMode == 'dec'){
+            div_keyboard.innerHTML = `
+                <div class="key" onclick="key1()">1</div>
+                <div class="key" onclick="key2()">2</div>
+                <div class="key" onclick="key3()">3</div>
+                <div class="key" onclick="key4()">4</div>
+                <div class="key" onclick="key5()">5</div>
+                <div class="key" onclick="key6()">6</div>
+                <div class="key" onclick="key7()">7</div>
+                <div class="key" onclick="key8()">8</div>
+                <div class="key" onclick="key9()">9</div>
+                <div class="key" onclick="keyBackspace()"><span class="material-symbols-outlined backspace">keyboard_backspace</span></div>
+                <div class="key" onclick="key0()">0</div>
+                <div class="key" onclick="keyCE()">CE</div>
             `
         }
     }
@@ -250,13 +272,59 @@
         }
         outputMode = options[posicaoOptions+1];
         span_output.innerHTML = outputMode;
+
+        atualizarDisplay();
     }
 
     function atualizarDisplay(){
-        valorInput = Number(div_input.innerHTML);
+        valorInput = div_input.innerHTML;
 
-        if(inputMode == 'dec' && outputMode == 'bin') div_output.innerHTML = valorInput.toString(2);
+        if(inputMode == 'dec' && outputMode == 'bin') div_output.innerHTML = Number(valorInput).toString(2);
+        if(inputMode == 'dec' && outputMode == 'oct') div_output.innerHTML = Number(valorInput).toString(8);
+        if(inputMode == 'dec' && outputMode == 'hex') div_output.innerHTML = Number(valorInput).toString(16);
+        if(inputMode == 'dec' && outputMode == 'dec') div_output.innerHTML = Number(valorInput).toString(10);
+        
+        if(inputMode == 'bin' && outputMode == 'oct'){
+            var decimal = parseInt(valorInput, 2);
+            div_output.innerHTML = decimal.toString(8);
+        }
+        if(inputMode == 'bin' && outputMode == 'dec'){
+            var decimal = parseInt(valorInput, 2);
+            div_output.innerHTML = decimal;
+        }
+        if(inputMode == 'bin' && outputMode == 'hex'){
+            var decimal = parseInt(valorInput, 2);
+            div_output.innerHTML = decimal.toString(16);
+        }
+        if(inputMode == 'bin' && outputMode == 'bin') div_output.innerHTML = valorInput;
 
+        if(inputMode == 'hex' && outputMode == 'dec'){
+            var decimal = parseInt(valorInput, 16);
+            div_output.innerHTML = decimal;
+        }
+        if(inputMode == 'hex' && outputMode == 'bin'){
+            var decimal = parseInt(valorInput, 16);
+            div_output.innerHTML = decimal.toString(2);
+        }
+        if(inputMode == 'hex' && outputMode == 'oct'){
+            var decimal = parseInt(valorInput, 16);
+            div_output.innerHTML = decimal.toString(8);
+        }
+        if(inputMode == 'hex' && outputMode == 'hex') div_output.innerHTML = valorInput;
+
+        if(inputMode == 'oct' && outputMode == 'dec'){
+            var decimal = parseInt(valorInput, 8);
+            div_output.innerHTML = decimal;
+        }
+        if(inputMode == 'oct' && outputMode == 'bin'){
+            var decimal = parseInt(valorInput, 8);
+            div_output.innerHTML = decimal.toString(2);
+        }
+        if(inputMode == 'oct' && outputMode == 'hex'){
+            var decimal = parseInt(valorInput, 8);
+            div_output.innerHTML = decimal.toString(16);
+        }
+        if(inputMode == 'oct' && outputMode == 'oct') div_output.innerHTML = valorInput;
     }
     function key1(){
         div_input.innerHTML += '1';
@@ -298,7 +366,31 @@
         div_input.innerHTML += '0';
         atualizarDisplay();
     }
+    function keyA(){
+        div_input.innerHTML += 'A';
+        atualizarDisplay();
+    }
+    function keyB(){
+        div_input.innerHTML += 'B';
+        atualizarDisplay();
+    }
     function keyC(){
+        div_input.innerHTML += 'C';
+        atualizarDisplay();
+    }
+    function keyD(){
+        div_input.innerHTML += 'D';
+        atualizarDisplay();
+    }
+    function keyE(){
+        div_input.innerHTML += 'E';
+        atualizarDisplay();
+    }
+    function keyF(){
+        div_input.innerHTML += 'F';
+        atualizarDisplay();
+    }
+    function keyBackspace(){
         div_input.innerHTML = div_input.innerHTML.slice(0, div_input.innerHTML.length-1);
         atualizarDisplay();
     }
